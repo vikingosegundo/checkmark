@@ -7,6 +7,9 @@
 
 @interface ViewController ()
 @property (nonatomic, strong) NSMutableArray *selectedCells;
+@property (nonatomic, strong) NSMutableArray *selecedStates;
+
+@property (nonatomic, strong) NSArray *states;
 @end
 
 @implementation ViewController
@@ -15,6 +18,16 @@
 {
     [super viewDidLoad];
     self.selectedCells = [NSMutableArray array];
+    self.selecedStates = [NSMutableArray array];
+    self.states = [NSArray arrayWithObjects:@"Alabama", @"Alaska", @"Arizona",
+                               @"Arkansas", @"California", @"Colorado", @"Connecticut", @"Delaware", @"District of Columbia",
+                               @"Florida", @"Georgia", @"Hawaii", @"Idaho", @"Illinois", @"Indiana", @"Iowa", @"Kansas",
+                               @"Kentucky", @"Louisiana", @"Maine", @"Maryland", @"Massachusetts", @"Michigan", @"Minnesota",
+                               @"Mississippi", @"Missouri", @"Montana", @"Nebraska", @"Nevada", @"New Hampshire",
+                               @"New Jersey", @"New Mexico", @"New York", @"North Carolina", @"North Dakota", @"Ohio",     @"Oklahoma",
+                               @"Oregon", @"Pennsylvania", @"Rhode Island", @"South Carolina", @"South Dakota",
+                               @"Tennessee", @"Texas", @"Utah", @"Vermont", @"Virginia", @"Washington", @"West Virginia", 
+                               @"Wisconsin", @"Wyoming", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -25,7 +38,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 100;
+    return [self.states count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -36,7 +49,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:unifiedID];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%u", indexPath.row];
+    cell.textLabel.text = [self.states objectAtIndex:indexPath.row];
     
     //if the indexPath was found among the selected ones, set the checkmark on the cell
     cell.accessoryType = ([self isRowSelectedOnTableView:tableView atIndexPath:indexPath]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
@@ -47,14 +60,19 @@
 //if a row gets selected, toggle checkmark
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *state = [self.states objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if([self isRowSelectedOnTableView:tableView atIndexPath:indexPath]){
         [self.selectedCells removeObject:indexPath];
+        [self.selecedStates removeObject:state];
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
         [self.selectedCells addObject:indexPath];
+        [self.selecedStates addObject:state];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
+    
+    NSLog(@"%@", self.selecedStates);
 }
 
 -(BOOL)isRowSelectedOnTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
