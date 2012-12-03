@@ -44,7 +44,7 @@
     
 }
 
-//if a cell gets selected, toggle checkmark
+//if a row gets selected, toggle checkmark
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
