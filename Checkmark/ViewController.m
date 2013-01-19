@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSArray *states;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)selectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender;
 @end
 
 @implementation ViewController
@@ -83,6 +84,9 @@
 }
 
 - (IBAction)selectAll:(id)sender {
+    
+    [self.selecedStates removeAllObjects];
+    [self.selectedCells removeAllObjects];
     NSUInteger numberOfSections = [self.tableView numberOfSections];
     for (NSUInteger s = 0; s < numberOfSections; ++s) {
         NSUInteger numberOfRowsInSection = [self.tableView numberOfRowsInSection:s];
@@ -92,6 +96,12 @@
             [self.selecedStates addObject:self.states[idxPath.row]];
         }
     }
+    [self.tableView reloadData];
+}
+
+- (IBAction)deselectAll:(id)sender {
+    [self.selecedStates removeAllObjects];
+    [self.selectedCells removeAllObjects];
     [self.tableView reloadData];
 }
 @end
