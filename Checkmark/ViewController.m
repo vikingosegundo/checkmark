@@ -108,10 +108,10 @@
 
 - (IBAction)toggleAll:(id)sender {
     if ([self.states count] == [self.selecedStates count]) {
-        [(UIBarButtonItem *)sender setTitle:@"select all"];
+        [sender setTitle:@"select all"];
         [self deselectAll:sender];
     } else {
-        [(UIBarButtonItem *)sender setTitle:@"deselect all"];
+        [sender setTitle:@"deselect all"];
         [self selectAll:sender];
     }
 }
