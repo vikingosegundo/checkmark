@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)selectAll:(id)sender;
 - (IBAction)deselectAll:(id)sender;
+- (IBAction)toggleAll:(id)sender;
 @end
 
 @implementation ViewController
@@ -103,5 +104,13 @@
     [self.selecedStates removeAllObjects];
     [self.selectedCells removeAllObjects];
     [self.tableView reloadData];
+}
+
+- (IBAction)toggleAll:(id)sender {
+    if ([self.states count] == [self.selecedStates count]) {
+        [self deselectAll:sender];
+    } else {
+        [self selectAll:sender];
+    }
 }
 @end
