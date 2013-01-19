@@ -10,6 +10,8 @@
 @property (nonatomic, strong) NSMutableArray *selecedStates;
 
 @property (nonatomic, strong) NSArray *states;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)selectAll:(id)sender;
 @end
 
 @implementation ViewController
@@ -80,4 +82,16 @@
     return ([self.selectedCells containsObject:indexPath]) ? YES : NO;
 }
 
+- (IBAction)selectAll:(id)sender {
+    NSUInteger numberOfSections = [self.tableView numberOfSections];
+    for (NSUInteger s = 0; s < numberOfSections; ++s) {
+        NSUInteger numberOfRowsInSection = [self.tableView numberOfRowsInSection:s];
+        for (NSUInteger r = 0; r < numberOfRowsInSection; ++r) {
+            NSIndexPath *idxPath = [NSIndexPath indexPathForRow:r inSection:s];
+            [self.selectedCells addObject:idxPath];
+            [self.selecedStates addObject:self.states[idxPath.row]];
+        }
+    }
+    [self.tableView reloadData];
+}
 @end
