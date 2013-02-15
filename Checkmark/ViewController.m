@@ -11,9 +11,9 @@
 
 @property (nonatomic, strong) NSArray *states;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-- (IBAction)selectAll:(id)sender;
-- (IBAction)deselectAll:(id)sender;
-- (IBAction)toggleAll:(id)sender;
+- (IBAction)deselectAllRows:(id)sender;
+- (IBAction)toggleAllRows:(id)sender;
+- (IBAction)selectAllRows:(id)sender;
 @end
 
 @implementation ViewController
@@ -75,7 +75,6 @@
         [self.selecedStates addObject:state];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    
     NSLog(@"%@", self.selecedStates);
 }
 
@@ -84,8 +83,15 @@
     return ([self.selectedCells containsObject:indexPath]) ? YES : NO;
 }
 
-- (IBAction)selectAll:(id)sender {
-    
+
+- (IBAction)deselectAllRows:(id)sender {
+    [self.selecedStates removeAllObjects];
+    [self.selectedCells removeAllObjects];
+    [self.tableView reloadData];
+}
+
+- (IBAction)selectAllRows:(id)sender
+{
     [self.selecedStates removeAllObjects];
     [self.selectedCells removeAllObjects];
     NSUInteger numberOfSections = [self.tableView numberOfSections];
@@ -100,19 +106,13 @@
     [self.tableView reloadData];
 }
 
-- (IBAction)deselectAll:(id)sender {
-    [self.selecedStates removeAllObjects];
-    [self.selectedCells removeAllObjects];
-    [self.tableView reloadData];
-}
-
-- (IBAction)toggleAll:(id)sender {
+- (IBAction)toggleAllRows:(id)sender {
     if ([self.states count] == [self.selecedStates count]) {
         [sender setTitle:@"select all"];
-        [self deselectAll:sender];
+        [self deselectAllRows:sender];
     } else {
         [sender setTitle:@"deselect all"];
-        [self selectAll:sender];
+        [self selectAllRows:sender];
     }
 }
 @end
